@@ -5,6 +5,7 @@ defmodule ExMachina.TestRepo.Migrations.MigrateAll do
     create table(:users) do
       add :name, :string
       add :admin, :boolean
+      add :net_worth, :decimal
     end
 
     create table(:articles) do

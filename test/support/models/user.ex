@@ -4,6 +4,7 @@ defmodule ExMachina.User do
   schema "users" do
     field :name, :string
     field :admin, :boolean
+    field :net_worth, :decimal
 
     has_many :articles, ExMachina.Article
   end

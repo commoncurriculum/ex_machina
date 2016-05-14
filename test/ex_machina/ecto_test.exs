@@ -33,7 +33,8 @@ defmodule ExMachina.EctoTest do
   test "params_for/2 removes Ecto specific fields" do
     assert TestFactory.params_for(:user) == %{
       name: "John Doe",
-      admin: false
+      admin: false,
+      net_worth: nil,
     }
   end
 
@@ -74,6 +75,7 @@ defmodule ExMachina.EctoTest do
     assert TestFactory.params_with_assocs(:user) == %{
       admin: false,
       name: "John Doe",
+      net_worth: nil,
     }
   end
 

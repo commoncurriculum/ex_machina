@@ -25,6 +25,7 @@ defmodule ExMachina.EctoStrategyTest do
     assert model == new_user
   end
 
+
   test "insert/1 raises if a map is passed" do
     message = "%{foo: \"bar\"} is not an Ecto model. Use `build` instead"
     assert_raise ArgumentError, message, fn ->
@@ -37,6 +38,31 @@ defmodule ExMachina.EctoStrategyTest do
     assert_raise ArgumentError, message, fn ->
       TestFactory.insert(%{__struct__: Foo.Bar})
     end
+  end
+
+  test "insert/1 casts all values" do
+    model = TestFactory.insert(:user, net_worth: 300)
+
+    assert model.net_worth == Decimal.new(300)
+  end
+
+  test "insert/1 casts values for structs" do
+    model = TestFactory.insert(%User{net_worth: 300})
+
+    assert model.net_worth == Decimal.new(300)
+  end
+
+  test "insert/1 casts built associations" do
+    built_author = TestFactory.build(:user, net_worth: 300)
+    model = TestFactory.insert(:article, author: built_author)
+
+    assert model.author.net_worth == Decimal.new(300)
+  end
+
+  test "insert/1 casts associations" do
+    model = TestFactory.insert(:article, author: %{net_worth: 300})
+
+    assert model.author.net_worth == Decimal.new(300)
   end
 
   test "passed in attrs can override associations" do
